@@ -1,9 +1,6 @@
-
-import React from 'react';
-import { Link } from 'react-router-dom';
 import { Instagram, Twitter, Linkedin, Mail } from 'lucide-react';
 
-const Footer = () => {
+export default function Footer() {
   return (
     <footer
       className="relative py-16 overflow-hidden"
@@ -16,7 +13,6 @@ const Footer = () => {
 
       <div className="relative z-10 max-w-6xl mx-auto px-6 md:px-16">
         <div className="flex flex-col md:flex-row items-start justify-between gap-12 pb-12 border-b border-cream/10">
-          {/* Brand */}
           <div className="max-w-xs">
             <div className="font-serif text-2xl font-bold tracking-widest text-cream uppercase mb-4">
               Biz<span className="text-blush">For</span>Her
@@ -24,63 +20,31 @@ const Footer = () => {
             <p className="text-cream/50 text-sm font-light leading-relaxed">
               Empowering the next generation of female founders through competition, mentorship, and community.
             </p>
-            <div className="mt-4 text-cream/40 text-xs font-light space-y-1">
-              <p>info@bizforher.in</p>
-              <p>+91 81089 40071</p>
-            </div>
           </div>
 
-          {/* Links */}
           <div className="grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-16">
             {[
               {
                 heading: 'Competition',
-                links: [
-                  { label: 'About', to: '/about' },
-                  { label: 'Apply Now', to: '/apply' },
-                  { label: 'Mentors & Jury', to: '/mentors' },
-                  { label: 'Courses', to: '/learn' },
-                ],
+                links: ['About', 'Timeline', 'Prizes', 'FAQs'],
               },
               {
                 heading: 'Resources',
-                links: [
-                  { label: 'Mentor Network', to: '/mentors' },
-                  { label: 'Contact Us', to: '/contact' },
-                ],
+                links: ['Mentor Network', 'Alumni Stories', 'Press Kit', 'Blog'],
               },
               {
                 heading: 'Connect',
-                links: [
-                  { label: 'Instagram', href: 'https://www.instagram.com/bizforherc/' },
-                  { label: 'WhatsApp', href: 'https://chat.whatsapp.com/LrvbuTaifRg9TbSuMq9pgU' },
-                ],
+                links: ['Contact Us', 'Partner With Us', 'Sponsor', 'Volunteer'],
               },
             ].map(({ heading, links }) => (
               <div key={heading}>
-                <div className="text-xs font-semibold tracking-[0.3em] uppercase text-cream/40 mb-4">
-                  {heading}
-                </div>
+                <div className="text-xs font-semibold tracking-[0.3em] uppercase text-cream/40 mb-4">{heading}</div>
                 <ul className="space-y-2.5">
                   {links.map((link) => (
-                    <li key={link.label}>
-                      {'href' in link ? (
-                        <a
-                          href={link.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-sm text-cream/60 hover:text-cream transition-colors duration-200 font-light"
-                        >
-                          {link.label}
-                        </a>
-                      ) : (
-                        <Link
-                          to={link.to}
-                          className="text-sm text-cream/60 hover:text-cream transition-colors duration-200 font-light"
-                        >
-                          {link.label}
-                        </Link>
-                      )}
+                    <li key={link}>
+                      <a href="#" className="text-sm text-cream/60 hover:text-cream transition-colors duration-200 font-light">
+                        {link}
+                      </a>
                     </li>
                   ))}
                 </ul>
@@ -91,18 +55,18 @@ const Footer = () => {
 
         <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-cream/30 text-xs font-light tracking-wide">
-            © {new Date().getFullYear()} BizForHer. All rights reserved.
+            2025 BizForHer. All rights reserved.
           </p>
           <div className="flex items-center gap-5">
             {[
-              { icon: Instagram, href: 'https://www.instagram.com/bizforherc/' },
-              { icon: Mail, href: 'mailto:info@bizforher.in' },
+              { icon: Instagram, href: '#' },
+              { icon: Twitter, href: '#' },
+              { icon: Linkedin, href: '#' },
+              { icon: Mail, href: '#' },
             ].map(({ icon: Icon, href }, i) => (
               <a
                 key={i}
                 href={href}
-                target="_blank"
-                rel="noopener noreferrer"
                 className="w-8 h-8 rounded-full flex items-center justify-center text-cream/40 hover:text-cream hover:bg-cream/10 transition-all duration-200"
               >
                 <Icon size={15} strokeWidth={1.5} />
@@ -113,6 +77,4 @@ const Footer = () => {
       </div>
     </footer>
   );
-};
-
-export default Footer;
+}

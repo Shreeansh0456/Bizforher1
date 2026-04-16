@@ -1,167 +1,214 @@
-import React from 'react';
-import PageLayout from '@/components/Layout/PageLayout';
-import AnimatedHeading from '@/components/shared/AnimatedHeading';
-import AnimatedSection from '@/components/shared/AnimatedSection';
-import { Button } from '@/components/ui/button';
+import React, { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
+import PageLayout from '@/components/Layout/PageLayout';
 
+function useReveal() {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+      { threshold: 0.08 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+  return ref;
+}
+
+// ── Data ──────────────────────────────────────────────────────────────────────
+
+const mentors = [
+  {
+    name: 'Swagat Yadav',
+    title: 'Founder, Learnacy School & One Young India',
+    description:
+      'Swagat Yadav is the Founder of Learnacy School and One Young India, initiatives dedicated to empowering youth through interdisciplinary and experiential education. He holds a degree in Electrical Engineering from Pune University and has collaborated with institutions like Mayo College and UPES.',
+    image: '/uploads/6cd302a3-9440-4dfb-a02e-1b391b5f9ee6.png',
+    accent: '#F7B3BC',
+  },
+  {
+    name: 'Bhakti Shah',
+    title: 'Higher Education & Social Impact Leader',
+    description:
+      'Bhakti Shah is a seasoned professional with over 17 years of experience in higher education and social impact initiatives. She earned her degree from the University of Westminster and has held leadership roles at organizations like Jewelers League.',
+    image: '/uploads/e28f9fd3-f2e0-4f17-a0d7-7caa0d618a54.png',
+    accent: '#C4CEDF',
+  },
+  {
+    name: 'Anjali Anand Seth',
+    title: 'AVP, International Admissions — Wesleyan College, USA',
+    description:
+      'Anjali Anand Seth is the Associate Vice President for International Admissions at Wesleyan College, USA, and a leading advocate for global education and women\'s empowerment. With over two decades of experience, she has worked extensively across India and the United States.',
+    image: '/uploads/70a2e89e-a3dd-45aa-b3da-63a719850e45.png',
+    accent: '#B8C3BD',
+  },
+  {
+    name: 'Mahesh Rao',
+    title: 'MBA, Global Business Leader & Educator',
+    description:
+      'MBA from XIM Bhubaneswar with 20 years of global experience across 45+ countries, including 12 years in CXO/CEO roles in FMCG, durables, and advertising. Since 2015, he has taught Marketing & Strategy at leading B-schools (IIMs, XIMB, SPJIMR), and has been a TEDx speaker and start-up mentor.',
+    image: '/uploads/a5750ce6-9d66-4696-a1a9-64df1872204e.png',
+    accent: '#E4B8BE',
+  },
+  {
+    name: 'Yashraj Erande',
+    title: 'Managing Director & Partner, Boston Consulting Group',
+    description:
+      'Yashraj Erande is a Managing Director and Partner at BCG Mumbai, serving as India Leader for the Financial Institutions practice and Global Leader for Fintech, with prior experience founding a credit fintech platform. Recognized in ET\'s 2018 \'40 Under 40\' list.',
+    image: '/uploads/340c01eb-922e-4d79-8e29-b79dcdda6f0d.png',
+    accent: '#F7B3BC',
+  },
+  {
+    name: 'Jaslene Bawa',
+    title: 'Assistant Professor of Finance, FLAME University',
+    description:
+      'Professor Jaslene Bawa is an Assistant Professor of Finance at FLAME University and the first FPM graduate in Finance and Accounting from IIM Raipur. Her research focuses on Indian equity markets, banking, and valuation, with publications in leading journals such as Finance Research Letters.',
+    image: '/uploads/5154d824-e344-4e4e-ad4d-c84112df72e1.png',
+    accent: '#C4CEDF',
+  },
+];
+
+
+// ── Page ──────────────────────────────────────────────────────────────────────
 const Mentors = () => {
-  const mentors = [
-    {
-      name: "Swagat Yadav",
-      title: "Founder of Learnacy School and One Young India",
-      description: "Swagat Yadav is the Founder of Learnacy School and One Young India, initiatives dedicated to empowering youth through interdisciplinary and experiential education. He holds a degree in Electrical Engineering from Pune University and has collaborated with institutions like Mayo College and UPES.",
-      image: "/uploads/6cd302a3-9440-4dfb-a02e-1b391b5f9ee6.png"
-    },
-    {
-      name: "Bhakti Shah",
-      title: "Higher Education & Social Impact Leader",
-      description: "Bhakti Shah is a seasoned professional with over 17 years of experience in higher education and social impact initiatives. She earned her degree from the University of Westminster and has held leadership roles at organizations like Jewelers League.",
-      image: "/uploads/e28f9fd3-f2e0-4f17-a0d7-7caa0d618a54.png"
-    },
-    {
-      name: "Anjali Anand Seth",
-      title: "Associate Vice President for International Admissions, Wesleyan College, USA",
-      description: "Anjali Anand Seth is the Associate Vice President for International Admissions at Wesleyan College, USA, and a leading advocate for global education and women's empowerment. With over two decades of experience, she has worked extensively across India and the United States.",
-      image: "/uploads/70a2e89e-a3dd-45aa-b3da-63a719850e45.png"
-    },
-    {
-      name: "Mahesh Rao",
-      title: "MBA, Global Business Leader & Educator",
-      description: "MBA from XIM Bhubaneswar with 20 years of global experience across 45+ countries, including 12 years in CXO/CEO roles in FMCG, durables, and advertising. Since 2015, he has taught Marketing & Strategy at leading B-schools (IIMs, XIMB, SPJIMR), and has been a TEDx speaker, IIMCAP panelist, and start-up mentor.",
-      image: "/uploads/a5750ce6-9d66-4696-a1a9-64df1872204e.png"
-    },
-    {
-      name: "Yashraj Erande",
-      title: "Managing Director & Partner, Boston Consulting Group",
-      description: "Yashraj Erande is a Managing Director and Partner based in Mumbai at Boston Consulting Group, serving as the India Leader for the Financial Institutions practice and Global Leader for Fintech, with prior experience founding a credit fintech platform, and recognized in ET's 2018 '40 Under 40' list.",
-      image: "/uploads/340c01eb-922e-4d79-8e29-b79dcdda6f0d.png"
-    },
-    {
-      name: "Jaslene Bawa",
-      title: "Assistant Professor of Finance, FLAME University",
-      description: "Professor Jaslene Bawa is an Assistant Professor of Finance at FLAME University and is the first FPM graduate in Finance and Accounting from IIM Raipur. Her research focuses on Indian equity markets, banking, and valuation, with publications in leading journals such as Finance Research Letters and Applied Economics Letters.",
-      image: "/uploads/5154d824-e344-4e4e-ad4d-c84112df72e1.png"
-    }
-  ];
+  const heroRef = useReveal();
+  const mentorItemRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const ctaRef = useReveal();
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+      { threshold: 0.08 }
+    );
+    mentorItemRefs.current.forEach((el) => { if (el) observer.observe(el); });
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <PageLayout>
-      <section className="bg-gradient-to-br from-primary/10 to-secondary/5 py-20 md:py-28">
-        <div className="container-custom">
-          <AnimatedSection animation="fade-up" className="text-center max-w-3xl mx-auto">
-            <span className="inline-block px-3 py-1 text-sm font-medium bg-primary/10 text-primary rounded-full mb-4">
-              Mentors & Jury
-            </span>
-            <AnimatedHeading
-              text="Meet the Experts Guiding Your Success"
-              className="heading-lg mb-6"
-              tag="h1"
-            />
-            <p className="text-lg text-gray-600">
-              Learn from industry leaders and successful entrepreneurs who will mentor and judge your business ideas.
-            </p>
-          </AnimatedSection>
+      {/* ── Hero ── */}
+      <section
+        className="relative overflow-hidden pt-36 pb-24"
+        style={{ background: 'linear-gradient(160deg, #F9DDED 0%, #F3EDE7 50%, #EDE4DD 100%)' }}
+      >
+        <div className="orb w-[500px] h-[500px] top-[-80px] right-[-120px] opacity-50 animate-float-slow"
+          style={{ background: 'radial-gradient(circle, #F7B3BC55, transparent 70%)' }} />
+        <div className="orb w-[300px] h-[300px] bottom-0 left-[-60px] opacity-30"
+          style={{ background: 'radial-gradient(circle, #C4CEDF55, transparent 70%)' }} />
+
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden" aria-hidden>
+          <span className="font-serif font-black text-[clamp(60px,14vw,200px)] leading-none tracking-tighter opacity-[0.05] text-rose-dark whitespace-nowrap">
+            MENTORS
+          </span>
+        </div>
+
+        <div ref={heroRef} className="section-reveal relative z-10 max-w-6xl mx-auto px-6 md:px-16 text-center">
+          <p className="text-xs font-semibold tracking-[0.4em] uppercase mb-4" style={{ color: '#7A8F8A' }}>
+            Mentors & Jury
+          </p>
+          <h1 className="font-serif text-[clamp(40px,6vw,80px)] font-bold leading-tight mb-6" style={{ color: '#4A3535' }}>
+            Learn from the
+            <br />
+            <span className="italic font-light" style={{ color: '#7A8F8A' }}>very best.</span>
+          </h1>
+          <p className="text-base md:text-lg font-light leading-relaxed max-w-2xl mx-auto" style={{ color: '#6B5858' }}>
+            Industry leaders, professors, and entrepreneurs who invest their time in the next generation of founders.
+          </p>
         </div>
       </section>
 
-      {/* Mentors Section */}
-      <section className="py-16">
-        <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-12 mb-16">
-            {mentors.map((mentor, index) => (
-              <AnimatedSection key={mentor.name} animation="fade-up" delay={index * 200}>
-                <div className="bg-white rounded-xl shadow-lg overflow-hidden p-8">
-                  {/* Round Image */}
-                  <div className="flex justify-center mb-6">
-                    <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-[#db8a6c]/20">
-                      <img 
-                        src={mentor.image} 
-                        alt={mentor.name}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                  </div>
-                  
-                  {/* Content */}
-                  <div className="text-center">
-                    <h3 className="text-2xl font-bold text-[#1c2939] mb-2">{mentor.name}</h3>
-                    <p className="text-[#db8a6c] font-semibold mb-4">{mentor.title}</p>
-                    <p className="text-gray-600 leading-relaxed text-left">{mentor.description}</p>
-                  </div>
-                </div>
-              </AnimatedSection>
-            ))}
+      {/* ── Mentor Cards ── */}
+      <section className="relative py-24 overflow-hidden" style={{ background: '#F3EDE7' }}>
+        <div className="orb orb-animated-drift w-[400px] h-[400px] top-0 right-[-100px] opacity-30"
+          style={{ background: 'radial-gradient(circle, #F9DDED70, transparent 70%)' }} />
+
+        <div className="max-w-6xl mx-auto px-6 md:px-16">
+          <div className="text-center mb-16">
+            <p className="text-xs font-semibold tracking-[0.4em] uppercase mb-4" style={{ color: '#7A8F8A' }}>
+              Expert Panel
+            </p>
+            <h2 className="font-serif text-[clamp(30px,4vw,52px)] font-bold" style={{ color: '#4A3535' }}>
+              Your
+              <span className="italic font-light" style={{ color: '#7A8F8A' }}> guides</span>
+            </h2>
           </div>
 
-          {/* Team Section */}
-          <AnimatedSection animation="fade-up" className="mb-16">
-            <h2 className="text-3xl font-bold mb-12 text-center">Team</h2>
-            
-            <div className="max-w-4xl mx-auto">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <AnimatedSection animation="scale-in" delay={500}>
-                  <div className="bg-gradient-to-br from-primary/10 to-secondary/5 rounded-xl p-6 text-center shadow-sm hover:shadow-md transition-shadow">
-                    <h3 className="text-xl font-bold text-primary mb-2">Co-Founder</h3>
-                    <p className="text-lg">Vaagish Agarwal</p>
-                  </div>
-                </AnimatedSection>
-                
-                <AnimatedSection animation="scale-in" delay={600}>
-                  <div className="bg-gradient-to-br from-primary/10 to-secondary/5 rounded-xl p-6 text-center shadow-sm hover:shadow-md transition-shadow">
-                    <h3 className="text-xl font-bold text-primary mb-2">Co-Founder</h3>
-                    <p className="text-lg">Shiven Khandelwal</p>
-                  </div>
-                </AnimatedSection>
-                
-                <AnimatedSection animation="scale-in" delay={700}>
-                  <div className="bg-gradient-to-br from-primary/10 to-secondary/5 rounded-xl p-6 text-center shadow-sm hover:shadow-md transition-shadow">
-                    <h3 className="text-xl font-bold text-primary mb-2">Co-Founder</h3>
-                    <p className="text-lg">Aryan</p>
-                  </div>
-                </AnimatedSection>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <AnimatedSection animation="scale-in" delay={800}>
-                  <div className="bg-gradient-to-br from-secondary/10 to-primary/5 rounded-xl p-6 text-center shadow-sm hover:shadow-md transition-shadow">
-                    <h3 className="text-xl font-bold text-primary mb-2">Strategic and Tech Head</h3>
-                    <p className="text-lg">Siddhant Nabera</p>
-                  </div>
-                </AnimatedSection>
-                
-                <AnimatedSection animation="scale-in" delay={900}>
-                  <div className="bg-gradient-to-br from-secondary/10 to-primary/5 rounded-xl p-6 text-center shadow-sm hover:shadow-md transition-shadow">
-                    <h3 className="text-xl font-bold text-primary mb-2">Business Unit Head</h3>
-                    <p className="text-lg">Samiksha Khemka</p>
-                  </div>
-                </AnimatedSection>
-                
-                <AnimatedSection animation="scale-in" delay={1000}>
-                  <div className="bg-gradient-to-br from-secondary/10 to-primary/5 rounded-xl p-6 text-center shadow-sm hover:shadow-md transition-shadow">
-                    <h3 className="text-xl font-bold text-primary mb-2">Design Head</h3>
-                    <p className="text-lg">Ira Malpani</p>
-                  </div>
-                </AnimatedSection>
-              </div>
-            </div>
-          </AnimatedSection>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {mentors.map(({ name, title, description, image, accent }, i) => (
+              <div
+                key={name}
+                ref={(el) => { mentorItemRefs.current[i] = el; }}
+                onMouseEnter={() => setHoveredIndex(i)}
+                onMouseLeave={() => setHoveredIndex(null)}
+                className="section-reveal group rounded-3xl overflow-hidden hover-lift"
+                style={{
+                  background: `linear-gradient(145deg, ${accent}14, ${accent}05)`,
+                  border: `1px solid ${accent}30`,
+                  transitionDelay: `${i * 0.08}s`,
+                  filter: hoveredIndex !== null && hoveredIndex !== i ? 'grayscale(100%) opacity(0.45)' : undefined,
+                  transition: 'filter 0.25s ease, opacity 0.25s ease',
+                }}
+              >
+                {/* Photo header */}
+                <div className="relative h-56 overflow-hidden"
+                  style={{ background: `${accent}18` }}>
+                  <img
+                    src={image}
+                    alt={name}
+                    className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                  />
+                  {/* Gradient overlay */}
+                  <div className="absolute inset-0"
+                    style={{ background: `linear-gradient(to top, ${accent}40 0%, transparent 60%)` }} />
+                </div>
 
-          {/* Call to Action */}
-          <AnimatedSection animation="fade-up" className="text-center">
-            <div className="bg-gradient-to-r from-[#db8a6c] to-[#c97b5d] rounded-2xl p-8 text-white">
-              <h3 className="text-2xl font-bold mb-4">Ready to Learn from the Best?</h3>
-              <p className="text-lg mb-6 opacity-90">
-                Join BizForHer 2025 and get mentored by industry experts who will guide you to success.
-              </p>
-              <a href="https://unstop.com/o/8xMeJ7y?lb=gFScrIk8" target="_blank" rel="noopener noreferrer">
-                <Button className="bg-white text-[#db8a6c] hover:bg-gray-100 group">
-                  Unstop Page
-                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </Button>
-              </a>
-            </div>
-          </AnimatedSection>
+                <div className="p-7">
+                  <div className="text-[10px] font-bold tracking-[0.3em] uppercase mb-1" style={{ color: accent }}>
+                    Mentor & Jury
+                  </div>
+                  <h3 className="font-serif text-xl font-bold mb-1" style={{ color: '#4A3535' }}>{name}</h3>
+                  <p className="text-sm font-medium mb-4" style={{ color: accent }}>{title}</p>
+                  <div className="h-px w-10 mb-4" style={{ background: `${accent}50` }} />
+                  <p className="text-sm font-light leading-relaxed" style={{ color: '#6B5858' }}>
+                    {description}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── CTA ── */}
+      <section className="relative overflow-hidden">
+        <div className="relative px-6 md:px-16 pt-20 pb-20"
+          style={{ background: 'linear-gradient(135deg, #2D2320 0%, #3A2E2B 100%)' }}>
+          <div className="orb w-[500px] h-[400px] top-0 right-0 opacity-10"
+            style={{ background: 'radial-gradient(circle, #F7B3BC, transparent 60%)' }} />
+
+          <div ref={ctaRef} className="section-reveal relative z-10 max-w-3xl mx-auto text-center">
+            <p className="text-xs font-bold tracking-[0.4em] uppercase mb-5" style={{ color: '#F7B3BC' }}>
+              Ready?
+            </p>
+            <h2 className="font-serif leading-tight mb-6" style={{ fontSize: 'clamp(28px,4vw,56px)', color: '#F3EDE7', fontWeight: 700 }}>
+              Learn from the best.
+              <br />
+              <span className="italic font-light" style={{ color: '#F7B3BC' }}>Compete with the best.</span>
+            </h2>
+            <p className="text-base font-light leading-relaxed mb-10 max-w-xl mx-auto"
+              style={{ color: 'rgba(243,237,231,0.65)' }}>
+              Join BizForHer 2025 and get mentored by industry experts who will guide you to success.
+            </p>
+            <Link
+              to="/competition#register"
+              className="inline-flex items-center gap-2.5 px-9 py-4 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105"
+              style={{ background: 'linear-gradient(135deg, #F7B3BC, #E4B8BE)', color: '#4A3535' }}
+            >
+              Apply Now <ArrowRight size={14} strokeWidth={2} />
+            </Link>
+          </div>
         </div>
       </section>
     </PageLayout>

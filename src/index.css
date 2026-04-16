@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,900;1,300;1,400;1,700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -243,6 +243,90 @@
     animation: logo-spin infinite 20s linear;
   }
 }
+
+/* ===== BOLT DESIGN SYSTEM ===== */
+
+/* Floating orb blobs */
+.orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(60px);
+  pointer-events: none;
+}
+
+/* Navbar scrolled state */
+.nav-scrolled {
+  background: rgba(243, 237, 231, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(247, 179, 188, 0.15);
+  box-shadow: 0 2px 24px rgba(74, 53, 53, 0.06);
+}
+
+/* Glass panel (light bg version) */
+.glass-dark {
+  background: rgba(243, 237, 231, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(247, 179, 188, 0.15);
+}
+
+/* Scroll-reveal animation */
+.section-reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1), transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.section-reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Hover lift card */
+.hover-lift {
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 60px rgba(74, 53, 53, 0.12);
+}
+
+/* Icon orbit spin on hover (parent group triggers) */
+.icon-orbit {
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Infinite marquee track */
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 28s linear infinite;
+}
+
+/* Timeline circle pulse */
+.timeline-circle-pulse {
+  animation: timeline-pulse 2.5s ease-in-out infinite;
+}
+
+/* About section animated line sweep */
+.about-line-sweep {
+  animation: line-sweep 2.5s ease-in-out infinite;
+}
+
+/* Animated drift orb variant */
+.orb-animated-drift {
+  animation: drift 18s ease-in-out infinite;
+}
+
+/* Animated float orb variants */
+.orb-animated-float {
+  animation: float-slow 6s ease-in-out infinite;
+}
+.orb-animated-pulse {
+  animation: float-delay 8s ease-in-out infinite;
+}
+
+/* ===== END BOLT DESIGN SYSTEM ===== */
 
 /* Dark mode styles */
 .dark {

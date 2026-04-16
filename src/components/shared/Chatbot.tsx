@@ -55,7 +55,7 @@ const Chatbot = () => {
              query.includes('participate') || query.includes('enroll') || query.includes('entry') ||
              query.includes('how to apply') || query.includes('how to register') || query.includes('signup') ||
              query.includes('get started') || query.includes('start') || query.includes('begin')) {
-      responseText = "Registration is FREE and completely online! You need to form a team of 2-4 girls from grades 9-12. Visit unstop.com and search for 'BizForHer 2025' or use our direct registration link. Registration deadline is August 5, 2025, 12:00 PM IST. You'll need team details, school information, and contact details for all members.";
+      responseText = "Registration is FREE and completely online! You need to form a team of 2-4 girls from grades 9-12. Visit our Competition page to register directly. Registration deadline is August 5, 2025, 12:00 PM IST. You'll need team details, school information, and contact details for all members.";
     }
 
     // Cases and solutions - enhanced keywords

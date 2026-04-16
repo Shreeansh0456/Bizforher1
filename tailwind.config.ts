@@ -66,11 +66,20 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+				// Bolt design palette
+				'rose-dark': '#4A3535',
+				'rose-mid': '#6B5858',
+				'rose-light': '#B89090',
+				'blush': '#F7B3BC',
+				'cream': '#F3EDE7',
+				'sage': '#B8C3BD',
+				'slate-blue': '#C4CEDF',
 			},
 			fontFamily: {
 				sans: ['Inter', 'sans-serif'],
 				heading: ['Poppins', 'sans-serif'],
+				serif: ['"Playfair Display"', 'Georgia', 'serif'],
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -78,6 +87,31 @@ export default {
 				sm: 'calc(var(--radius) - 4px)'
 			},
 			keyframes: {
+				"drift": {
+					"0%, 100%": { transform: "translate(0, 0) scale(1)" },
+					"33%": { transform: "translate(30px, -20px) scale(1.05)" },
+					"66%": { transform: "translate(-20px, 15px) scale(0.97)" },
+				},
+				"float-slow": {
+					"0%, 100%": { transform: "translateY(0)" },
+					"50%": { transform: "translateY(-18px)" },
+				},
+				"float-delay": {
+					"0%, 100%": { transform: "translateY(0) rotate(0deg)" },
+					"50%": { transform: "translateY(-12px) rotate(3deg)" },
+				},
+				"marquee": {
+					"0%": { transform: "translateX(0)" },
+					"100%": { transform: "translateX(-50%)" },
+				},
+				"timeline-pulse": {
+					"0%, 100%": { boxShadow: "0 0 0 0 rgba(247, 179, 188, 0.4)" },
+					"50%": { boxShadow: "0 0 0 8px rgba(247, 179, 188, 0)" },
+				},
+				"line-sweep": {
+					"0%": { transform: "translateX(-100%)" },
+					"100%": { transform: "translateX(200%)" },
+				},
 				"accordion-down": {
 					from: { height: "0" },
 					to: { height: "var(--radix-accordion-content-height)" },
@@ -121,6 +155,12 @@ export default {
 				}
 			},
 			animation: {
+				"drift": "drift 18s ease-in-out infinite",
+				"float-slow": "float-slow 6s ease-in-out infinite",
+				"float-delay": "float-delay 8s ease-in-out infinite 1.5s",
+				"marquee": "marquee 28s linear infinite",
+				"timeline-pulse": "timeline-pulse 2.5s ease-in-out infinite",
+				"line-sweep": "line-sweep 2.5s ease-in-out infinite",
 				"accordion-down": "accordion-down 0.2s ease-out",
 				"accordion-up": "accordion-up 0.2s ease-out",
 				"fade-in": "fade-in 0.5s ease-out",
