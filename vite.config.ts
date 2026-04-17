@@ -4,6 +4,8 @@ import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
+  base: "/Bizforher1/", // 👈 ADD THIS
+
   server: {
     host: "::",
     port: 8080,
